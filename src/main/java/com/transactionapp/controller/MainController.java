@@ -51,6 +51,7 @@ public class MainController {
 	/* ---------- GET Amount by id ------------- */
 	@GetMapping("/sum/{id}")
 	public ResponseEntity<?> getAmountById(@PathVariable("id") Long id) {
+		tscService.getAmountById(id);
 		Transaction t = tscService.getTransactionById(id);
 		if(t != null)
 			return new ResponseEntity<Transaction>(t, HttpStatus.OK);

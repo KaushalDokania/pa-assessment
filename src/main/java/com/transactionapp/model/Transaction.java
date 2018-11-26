@@ -10,7 +10,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
@@ -27,12 +29,14 @@ public class Transaction implements Serializable {
 	private String type;
 	
 	@JsonProperty("parent_id")
+	@Transient
 	private Long parentId;
 	
 	@ManyToOne
 	@JoinColumn(name="parent_id")
 	private Transaction parent;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy="parent")
 	private List<Transaction> children = new ArrayList<>();
 	

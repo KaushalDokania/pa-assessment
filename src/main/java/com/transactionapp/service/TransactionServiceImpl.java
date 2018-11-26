@@ -37,14 +37,23 @@ public class TransactionServiceImpl implements TransactionService{
 
 	@Override
 	public List<Transaction> getAllTransactions() {
-		System.out.println("sum = " + tscDao.getAmountById(1L));
+//		System.out.println("sum = " + tscDao.getAmountById(1L));
 		return tscDao.getAllTransactions();
 	}
 
 	@Override
 	public Transaction getAmountById(Long id) {
-		// TODO Auto-generated method stub
+		Transaction tsc = tscDao.getTransactionById(id);
+		System.out.println("sum = " + getChildrenAmount(tsc));
 		return null;
 	}
 
+	private Double getChildrenAmount(Transaction tsc) {
+		Double sum = tsc.getAmount();
+		if(! tsc.getChildren().isEmpty() ) {
+			for(Transaction child : tsc.getChildren())
+				sum += getChildrenAmount(child);
+		}
+		return sum;
+	}
 }
